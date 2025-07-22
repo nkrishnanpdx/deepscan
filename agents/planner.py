@@ -1,19 +1,33 @@
-# agents/planner.py
+from openai import AsyncOpenAI
+import os
 
-from agents import Agent, Runner, trace
-
-planner = Agent(
-    name="QueryPlanner",
-    instructions=(
-        "You are an expert security analyst. Generate search queries to find CVEs "
-        "related to speculative execution attacks on Intel CPUs. Include Spectre, Meltdown, MDS, and microcode terms. "
-        "Include keywords like CVE, Intel, vulnerability, and relevant years."
-    ),
-    model="gpt-4o-mini"
-)
+client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 async def generate_search_queries(topic: str) -> list[str]:
-    prompt = f"Generate 5 specific and effective search queries to find CVEs for: {topic}"
-    with trace("Generate Search Queries"):
-        result = await Runner.run(planner, prompt)
-        return result.final_output.strip().splitlines()
+    response = await client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a security expert generating precise and comprehensive search queries "
+                    "to find CVEs related to Intel x86 speculative, transient execution, and side-channel vulnerabilities "
+                    "from 2018 to 2025."
+                )
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Generate 5 specific, effective search queries for CVEs related to: {topic}. "
+                    "Include relevant terms such as Spectre, Meltdown, Foreshadow, MDS, GDS, Downfall, Data Sampling, "
+                    "Register File Data Sampling, Branch Target Injection, Branch Privilege Injection, Branch History Attacks, "
+                    "BPU attacks, Crosstalk, Special Register Buffer Data Sampling, microcode updates, patches, and any other related microarchitectural vulnerabilities."
+                )
+            }
+        ],
+        max_tokens=250,
+        temperature=0.3,
+    )
+    content = response.choices[0].message.content
+    text = content.strip() if content else ""
+    return [line.strip("-*1234567890. ").strip() for line in text.splitlines() if line.strip()]
