@@ -6,10 +6,10 @@ NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 
 START_DATE = "2017-01-01T00:00:00.000Z"
 END_DATE = "2025-12-31T23:59:59.999Z"
-
+API_KEY = os.getenv("NVD_API_KEY")
 async def search_cves(queries: List[str]) -> List[str]:
     results = []
-
+    headers = {"apiKey": API_KEY} if API_KEY else {}
     async with aiohttp.ClientSession() as session:
         for query in queries:
             params = {
