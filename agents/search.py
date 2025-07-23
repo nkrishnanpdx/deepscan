@@ -1,27 +1,39 @@
-from openai import AsyncOpenAI
-import os
+import aiohttp
+from datetime import datetime
+from typing import List
 
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 
-async def search_cves(queries: list[str]) -> list[str]:
-    prompt = (
-        "You are a cybersecurity analyst helping to identify CVEs related to Intel x86 speculative execution, side-channel, and transient execution attacks from 2018 to 2025.\n\n"
-        "From the following search queries, extract relevant CVE entries:\n\n"
-        + "\n".join(queries)
-    )
+START_DATE = "2017-01-01T00:00:00.000Z"
+END_DATE = "2025-12-31T23:59:59.999Z"
 
-    response = await client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You are an expert at identifying relevant CVEs from query logs."},
-            {"role": "user", "content": prompt},
-        ],
-        max_tokens=1000,
-        temperature=0.2,
-    )
+async def search_cves(queries: List[str]) -> List[str]:
+    results = []
 
-    raw_text = response.choices[0].message.content
-    if raw_text:
-        return [line.strip("-*• \n") for line in raw_text.splitlines() if "CVE" in line]
-    else:
-        return []
+    async with aiohttp.ClientSession() as session:
+        for query in queries:
+            params = {
+                "keywordSearch": query,
+                "pubStartDate": START_DATE,
+                "pubEndDate": END_DATE,
+                "resultsPerPage": 200
+            }
+
+            async with session.get(NVD_API_URL, params=params) as resp:
+                if resp.status != 200:
+                    print(f"[!] Failed to fetch CVEs for query '{query}': Status {resp.status}")
+                    continue
+                data = await resp.json()
+
+                for item in data.get("vulnerabilities", []):
+                    cve = item.get("cve", {})
+                    cve_id = cve.get("id", "Unknown-CVE")
+                    description = cve.get("descriptions", [{}])[0].get("value", "")
+
+                    if "intel" in description.lower() and any(
+                        kw in description.lower()
+                        for kw in ["speculative", "transient", "side-channel", "execution", "sampling"]
+                    ):
+                        results.append(f"{cve_id}: {description.strip()}")
+
+    return results
