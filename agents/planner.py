@@ -35,13 +35,21 @@ async def generate_search_queries(topic: str) -> list[str]:
         "from 2018 to 2025."
     )
     user_prompt = (
-        f"Generate 5 specific, effective search queries for CVEs related to: {topic}. "
-        f"Include relevant terms such as {keyword_list}, microcode updates, patches, and any other related "
-        "microarchitectural vulnerabilities."
+        f"Generate 10 highly precise search queries to find *all* CVEs published between 2017 and 2025 "
+        f"related to Intel x86 speculative execution, transient execution, and side-channel vulnerabilities. "
+        f"Include keywords like 'speculative execution', 'transient execution', 'side-channel', 'microarchitectural data sampling', "
+        f"and specific vulnerability names like Spectre, Meltdown, MDS, Foreshadow, LVI, TAA, GDS, Downfall, SRBDS, RFDS, "
+        f"Register File Data Sampling (RFDS), Indirect Target Selection, Branch History Injection, Intra-mode Branch Target Injection, "
+        f"Gather Data Sampling (GDS), Special Register Buffer Data Sampling (SRBDS), Microarchitectural Data Sampling (MDS, MSBDS, MFBDS, MLPDS, MDSUM), "
+        f"L1 Terminal Fault (Foreshadow), Load Value Injection (LVI), Retpoline, Snoop-assisted L1 Data Sampling, Sub-page Permission (SPP), "
+        f"Speculative Store Bypass (Spectre v4), SWAPGS and Segment Registers, Transactional Synchronization Extensions (Intel TSX), "
+        f"Bounds Check Bypass (Spectre v1), Branch Target Injection (Spectre v2), Rogue Data Cache Load (Spectre v3), Processor MMIO Stale Data, "
+        f"Trusted Execution Configuration Register Access, Host Firmware Speculative Execution Mitigations. "
+        f"Add explicit date filters like 'published between 2017 and 2025' where possible."
     )
 
     response = await client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}

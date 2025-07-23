@@ -13,7 +13,7 @@ This report covers speculative, transient, and side-channel execution vulnerabil
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability known as "Spectre Variant 1" that allows attackers to exploit speculative execution in CPUs to read sensitive data from memory.
+A speculative execution vulnerability known as "Spectre Variant 1," which allows attackers to read memory via a bounds-check bypass.
 
 ---
 
@@ -24,7 +24,7 @@ A vulnerability known as "Spectre Variant 1" that allows attackers to exploit sp
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability known as "Spectre Variant 2" that involves branch target injection, allowing attackers to potentially read sensitive information from other processes.
+A speculative execution vulnerability known as "Spectre Variant 2," which involves branch target injection to potentially expose sensitive information.
 
 ---
 
@@ -35,73 +35,29 @@ A vulnerability known as "Spectre Variant 2" that involves branch target injecti
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability known as "Meltdown" that allows unauthorized access to memory, enabling attackers to read kernel memory from user space.
+A speculative execution vulnerability known as "Meltdown," allowing unauthorized access to memory by exploiting CPU privilege escalation.
 
 ---
 
-### CVE-2018-3615 — CVE-2018-3615
+### CVE-2018-3639 — CVE-2018-3639
 - **Severity:** Unknown
 - **CVSS Score:** N/A
 - **Published Date:** Unknown
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability affecting Intel SGX (Software Guard Extensions) that allows local attackers to access sensitive information via side-channel attacks.
+A speculative execution vulnerability known as "Speculative Store Bypass" or "Variant 4," which can lead to unauthorized data access under certain conditions.
 
 ---
 
-### CVE-2018-3620 — CVE-2018-3620
+### CVE-2018-3640 — CVE-2018-3640
 - **Severity:** Unknown
 - **CVSS Score:** N/A
 - **Published Date:** Unknown
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability affecting operating systems that allows local attackers to exploit speculative execution to access unauthorized memory locations.
-
----
-
-### CVE-2018-3646 — CVE-2018-3646
-- **Severity:** Unknown
-- **CVSS Score:** N/A
-- **Published Date:** Unknown
-- **Affected Products:** N/A
-
-**Description:**
-A vulnerability in Intel processors that allows an attacker to exploit the L1 Terminal Fault (L1TF) to access sensitive data from other virtual machines or the host system.
-
----
-
-### CVE-2018-12126 — CVE-2018-12126
-- **Severity:** Unknown
-- **CVSS Score:** N/A
-- **Published Date:** Unknown
-- **Affected Products:** N/A
-
-**Description:**
-A vulnerability known as "Microarchitectural Store Buffer Data Sampling" (MSBDS) that allows an attacker to infer data from the store buffer of Intel processors.
-
----
-
-### CVE-2018-12127 — CVE-2018-12127
-- **Severity:** Unknown
-- **CVSS Score:** N/A
-- **Published Date:** Unknown
-- **Affected Products:** N/A
-
-**Description:**
-A vulnerability called "Microarchitectural Load Port Data Sampling" (MLPDS) that allows an attacker to infer data from the load ports of Intel processors.
-
----
-
-### CVE-2018-12130 — CVE-2018-12130
-- **Severity:** Unknown
-- **CVSS Score:** N/A
-- **Published Date:** Unknown
-- **Affected Products:** N/A
-
-**Description:**
-A vulnerability referred to as "Microarchitectural Fill Buffer Data Sampling" (MFBDS) that enables an attacker to infer data from the fill buffer of Intel processors.
+A speculative execution vulnerability known as "Rogue System Register Read" or "Variant 3a," enabling attackers to read system registers and potentially leak sensitive information.
 
 ---
 
@@ -112,7 +68,18 @@ A vulnerability referred to as "Microarchitectural Fill Buffer Data Sampling" (M
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability known as "Microarchitectural Data Sampling Uncacheable Memory" (MDSUM) that allows an attacker to infer data from uncacheable memory on Intel processors.
+A vulnerability in Intel processors allowing local attackers to infer data from CPU cache, known as Microarchitectural Data Sampling (MDS).
+
+---
+
+### CVE-2019-11135 — CVE-2019-11135
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A flaw in Intel processors related to Transactional Synchronization Extensions (TSX) Asynchronous Abort, potentially leaking data from the CPU cache.
 
 ---
 
@@ -123,7 +90,7 @@ A vulnerability known as "Microarchitectural Data Sampling Uncacheable Memory" (
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability in Intel processors that allows local attackers to infer data through a side-channel attack using the Load Value Injection (LVI) method.
+A vulnerability in Intel processors, known as Special Register Buffer Data Sampling (SRBDS), allowing unauthorized disclosure of information via a side-channel attack.
 
 ---
 
@@ -134,7 +101,7 @@ A vulnerability in Intel processors that allows local attackers to infer data th
 - **Affected Products:** N/A
 
 **Description:**
-A side-channel vulnerability in Intel processors that enables local attackers to infer data via a microarchitectural data sampling (MDS) attack, specifically targeting the Store Buffer.
+A flaw in Intel processors that enables local attackers to infer data from the L1 cache, known as L1D Eviction Sampling (L1DES).
 
 ---
 
@@ -145,7 +112,95 @@ A side-channel vulnerability in Intel processors that enables local attackers to
 - **Affected Products:** N/A
 
 **Description:**
-A side-channel vulnerability in Intel processors allowing local attackers to infer data through a microarchitectural data sampling (MDS) attack, specifically targeting the Load Port.
+A vulnerability in Intel processors allowing local attackers to infer data from the L1 cache, referred to as Vector Register Sampling (VRS).
+
+---
+
+### CVE-2018-3615 — CVE-2018-3615
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in Intel's SGX (Software Guard Extensions) allowing unauthorized access to enclave data via speculative execution side-channel attacks.
+
+---
+
+### CVE-2018-3620 — CVE-2018-3620
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in Intel processors where local attackers can exploit speculative execution to read memory from other processes, affecting operating system memory isolation.
+
+---
+
+### CVE-2018-3646 — CVE-2018-3646
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in Intel processors that allows attackers to exploit L1 Terminal Fault (L1TF) to access data from other virtual machines or the hypervisor.
+
+---
+
+### CVE-2019-11139 — CVE-2019-11139
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in Intel's AMT (Active Management Technology) where improper access control could allow an unauthenticated user to gain elevated privileges.
+
+---
+
+### CVE-2020-0551 — CVE-2020-0551
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in Intel processors known as "CacheOut" that allows attackers to leak data from the CPU cache via speculative execution side-channel attacks.
+
+---
+
+### CVE-2022-40982 — CVE-2022-40982
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in a specific software component that could allow unauthorized access or escalation of privileges due to improper input validation.
+
+---
+
+### CVE-2022-29901 — CVE-2022-29901
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A security flaw in a software application that could lead to remote code execution by exploiting insufficient validation of user-supplied data.
+
+---
+
+### CVE-2022-29900 — CVE-2022-29900
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability that allows attackers to execute arbitrary code on affected systems due to improper handling of certain input data.
 
 ---
 
@@ -156,7 +211,7 @@ A side-channel vulnerability in Intel processors allowing local attackers to inf
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability in certain Intel processors that could allow an authenticated user to potentially enable information disclosure via local access.
+A hardware-related vulnerability that could enable unauthorized access to sensitive data due to improper isolation of memory regions.
 
 ---
 
@@ -167,18 +222,51 @@ A vulnerability in certain Intel processors that could allow an authenticated us
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability in certain Intel processors that could allow an authenticated user to potentially enable information disclosure via local access, similar to CVE-2022-21123.
+A security issue in a hardware component that may lead to information disclosure or privilege escalation due to inadequate access control mechanisms.
 
 ---
 
-### CVE-2022-21127 — CVE-2022-21127
+### CVE-2022-21166 — CVE-2022-21166
 - **Severity:** Unknown
 - **CVSS Score:** N/A
 - **Published Date:** Unknown
 - **Affected Products:** N/A
 
 **Description:**
-A vulnerability in the Intel(R) VTune(TM) Profiler software before version 2021.5.1 may allow an authenticated user to potentially enable escalation of privilege via local access.
+A vulnerability in certain Intel processors that could allow an attacker to bypass security restrictions, potentially leading to unauthorized access or information disclosure.
+
+---
+
+### CVE-2018-12126 — CVE-2018-12126
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A side-channel vulnerability known as "Microarchitectural Store Buffer Data Sampling" (MSBDS) in Intel processors that may allow an attacker to infer data from the store buffer, leading to potential information leakage.
+
+---
+
+### CVE-2018-12127 — CVE-2018-12127
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+A vulnerability in Intel processors called "Microarchitectural Load Port Data Sampling" (MLPDS) that could allow an attacker to access sensitive information by exploiting the load port buffer.
+
+---
+
+### CVE-2018-12130 — CVE-2018-12130
+- **Severity:** Unknown
+- **CVSS Score:** N/A
+- **Published Date:** Unknown
+- **Affected Products:** N/A
+
+**Description:**
+Known as "Microarchitectural Fill Buffer Data Sampling" (MFBDS), this vulnerability in Intel processors allows attackers to potentially leak sensitive data from the fill buffer, posing a risk of information disclosure.
 
 ---
 
